@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        canvas{
+            border : 2px solid;
+            margin : 0 auto;
+            display : block;
+            margin-top : 10px;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="out" width="500" height="500"	></canvas>
+<script type="text/javascript">
+    const canvas=document.querySelector('canvas');
+    ctx=canvas.getContext('2d');
+    x=200;y=200;r=30;
+    state ={
+        left:false,
+        right:false,
+        up:false,
+        down:false,
+    }
+    function drawCircle(){
+        if(state.right){
+            x+=10;
+            state.right=false;
+        }
+        if(state.left){
+            x-=10;
+            state.left=false;
+        }
+        if(state.up){
+            y-=10;
+            state.up=false;
+        }
+        if(state.down){
+            y+=10;
+            state.down=false;
+        }
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.beginPath();
+        ctx.arc(x,y,r, 0, 2*Math.PI);
+        ctx.fillStyle = "#1B5E20";
+        ctx.fill();
+    }
+
+    document.addEventListener('keydown',(evt)=>{
+        console.log(evt);
+        if(evt.key == 'ArrowRight'){
+            state.right=true;
+        }
+        if(evt.key == 'ArrowLeft'){
+            state.left=true;
+        }
+        if(evt.key == 'ArrowDown'){
+            state.down=true;
+        }
+        if(evt.key == 'ArrowUp'){
+            state.up=true;
+        }
+    })
+
+
+    function loop() {
+        drawCircle();
+        requestAnimationFrame(loop);
+    }
+    loop();
+</script>
+
+
+</body>
+</html>
